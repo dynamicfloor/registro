@@ -1,2 +1,2 @@
-# dynamicfloor.github.io
+# dynamicfloor
 Web
