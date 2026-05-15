@@ -212,6 +212,10 @@ body{
     color:var(--green);
 }
 
+.orange{
+    color:#FB923C;
+}
+
 .info-content{
     line-height:1.8;
     color:#E2E8F0;
