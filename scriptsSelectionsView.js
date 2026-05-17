@@ -34,7 +34,7 @@ const GOOGLE_FORM_ACTION =
 
 
 const fields = {
-
+    name: "entry.767501226",
     selection_1: "entry.789069526",
     selection_2: "entry.1010090530",
     selection_3: "entry.1112729241",
@@ -50,6 +50,11 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+
+        formData.append(
+        fields.name,
+        document.getElementById("name").value
+    );
 
     // ENVIAR TRACKS
     for (let i = 1; i <= 5; i++) {
