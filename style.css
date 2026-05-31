@@ -431,6 +431,7 @@ input[type="text"]:focus{
 
 }
 
+
 .notice-tag{
 
     position:relative;
@@ -452,14 +453,14 @@ input[type="text"]:focus{
 }
 
 .notice-text{
-
-    position:relative;
-    z-index:2;
-    color:var(--muted);
-    line-height:1.9;
-    font-size:14px;
-    font-weight:400;
-
+    position: relative;
+    z-index: 2;
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* MOBILE */
