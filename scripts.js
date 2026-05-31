@@ -13,7 +13,7 @@ const fields = {
 /* =========================
    Date Config
 ========================= */
-const fechaSoloEspectador = new Date("2026-06-06T00:00:00");
+const fechaSoloEspectador = new Date("2026-06-04T00:00:00");
 const soloEspectador = new Date() >= fechaSoloEspectador;
 console.log("Get Date Today: ", new Date())
 /* =========================
