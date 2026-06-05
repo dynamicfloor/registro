@@ -45,7 +45,18 @@ const fields = {
 
 /* SUBMIT */
 
+const fechaSoloEspectador = new Date("2026-06-06T00:00:00");
+const registrosAbiertos = new Date() >= fechaSoloEspectador;
+console.log("Get Date Today: ", new Date(),"Flag: ", registrosAbiertos)
+
+if (registrosAbiertos) {
+    registerSelectionScreen.style.display = "none";
+    successScreenselection.style.display = "none";
+    limitScreen.style.display = "block";
+}
+
 form.addEventListener("submit", async (e) => {
+
 
     e.preventDefault();
 

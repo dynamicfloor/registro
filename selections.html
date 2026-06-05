@@ -8,6 +8,12 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- ANTI CACHE -->
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -123,12 +129,35 @@
                     Muy pronto compartiremos retroalimentación contigo.
                 </p>
 
-                <button
+                <!-- <button
                     class="back-btn"
                     onclick="location.reload()"
                 >
                     Volver
-                </button>
+                </button> -->
+
+            </div>
+
+            <div
+                class="success-screen"
+                id="limitScreen"
+                style="display:none;"
+            >
+
+                <div class="success-icon">
+                    !
+                </div>
+
+                <h2>
+                    Registro de propuestas musicales cerrado
+                </h2>
+
+                <p>
+                    La recepción de propuestas musicales para esta edición ha finalizado.
+                    <br><br>
+                    Agradecemos el interés mostrado en formar parte de la experiencia Dynamic Floor y valoramos 
+                    el tiempo invertido en la preparación de cada propuesta.
+                </p>
 
             </div>
 
