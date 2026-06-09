@@ -16,7 +16,7 @@
 }
 
 /* =========================
-   RESET & BASE
+    RESET & BASE
 ========================= */
 * {
     margin: 0;
@@ -25,7 +25,7 @@
 }
 
 html, body {
-    min-height: 100%; /* Evita cortes si el contenido desborda en móviles */
+    min-height: 100%;
 }
 
 body {
@@ -35,38 +35,42 @@ body {
         var(--bg);
     color: var(--text);
     font-family: Inter, system-ui, sans-serif;
-    padding: clamp(14px, 4vw, 32px); /* Padding fluido según la pantalla */
+    padding: clamp(14px, 4vw, 32px);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 /* =========================
-   APP LAYOUT (Siempre vertical, hacia abajo)
+    APP LAYOUT
 ========================= */
 .app-container {
     width: 100%;
-    max-width: 1000px; /* Ancho máximo ideal para lectura vertical */
+    max-width: 1000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: clamp(20px, 4vw, 32px); /* Separación dinámica entre bloques */
+    gap: clamp(20px, 4vw, 32px);
 }
 
 /* =========================
-   MAIN DISPLAY
+    MAIN DISPLAY
 ========================= */
 .main-display {
     position: relative;
     background: rgba(15,23,42,.92);
     border: 1px solid rgba(255,255,255,.06);
     border-radius: 28px;
-    padding: clamp(24px, 5vw, 44px); /* Más aire interno en pantallas grandes */
+    padding: clamp(24px, 5vw, 44px);
     overflow: hidden;
     box-shadow: var(--shadow);
+    
+    /* Activamos Flexbox para controlar el orden de los elementos hijos */
+    display: flex;
+    flex-direction: column;
 }
 
-/* Reloj en la esquina */
+/* Reloj en la esquina (Por defecto en vertical) */
 .live-clock {
     position: absolute;
     top: 24px;
@@ -82,7 +86,7 @@ body {
 }
 
 /* =========================
-   STATUS & TITLES
+    STATUS & TITLES
 ========================= */
 .current-label {
     display: inline-flex;
@@ -95,15 +99,16 @@ body {
     font-weight: 800;
     letter-spacing: .08em;
     margin-bottom: 22px;
+    align-self: flex-start; /* Evita que ocupe todo el ancho */
 }
 
 #current-segment-title {
-    font-size: clamp(1.8rem, 5vw, 3.5rem); /* Escalado perfecto */
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
     font-weight: 900;
     letter-spacing: -0.04em;
     margin-bottom: 8px;
     line-height: 1.2;
-    max-width: 80%; /* Para que no choque con el reloj en pantallas medianas */
+    max-width: 80%;
 }
 
 #current-segment-host {
@@ -113,10 +118,10 @@ body {
 }
 
 /* =========================
-   TIMER
+    TIMER
 ========================= */
 .big-timer {
-    font-size: clamp(4.5rem, 15vw, 9.5rem); /* Gigante en PC, adaptable en celular */
+    font-size: clamp(4.5rem, 15vw, 9.5rem);
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.06em;
@@ -125,14 +130,8 @@ body {
 }
 
 /* =========================
-   PROGRESS & CONTROLS
+    PROGRESS & CONTROLS
 ========================= */
-.schedule-display {
-    margin-top: 18px;
-    color: var(--text-soft);
-    font-size: 1rem;
-}
-
 .progress-container {
     width: 100%;
     height: 12px;
@@ -157,7 +156,7 @@ body {
 
 .controls-row button {
     flex: 1;
-    min-width: 56px; /* Evita que se colapsen en pantallas muy chicas */
+    min-width: 56px;
     max-width: 70px;
     height: 60px;
     border: none;
@@ -176,7 +175,7 @@ body {
 }
 
 /* =========================
-   QUEUE / COLA DE ESPERA (Abajo)
+    QUEUE / COLA DE ESPERA
 ========================= */
 .queue-section {
     display: grid;
@@ -208,28 +207,14 @@ body {
     transition: var(--transition);
 }
 
-.timer-card:hover {
-    background: var(--card-hover);
-}
+.timer-card:hover { background: var(--card-hover); }
+.timer-card.active { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(139,92,246,.35); }
 
-.timer-card.active {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px rgba(139,92,246,.35);
-}
-
-.timer-title {
-    font-size: 1.05rem;
-    font-weight: 800;
-}
-
-.timer-sub {
-    margin-top: 4px;
-    color: var(--text-soft);
-    font-size: .9rem;
-}
+.timer-title { font-size: 1.05rem; font-weight: 800; }
+.timer-sub { margin-top: 4px; color: var(--text-soft); font-size: .9rem; }
 
 /* =========================
-   BUTTONS
+    BUTTONS & MODAL
 ========================= */
 .edit-btn {
     height: 42px;
@@ -240,124 +225,41 @@ body {
     background: rgba(139,92,246,.15);
     color: white;
     font-weight: 600;
-    white-space: nowrap; /* Evita que el texto se parta en dos */
+    white-space: nowrap;
 }
 
-.edit-btn:hover {
-    background: rgba(139,92,246,.3);
-}
-
-.list-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 8px;
-}
-
+.list-actions { display: flex; justify-content: center; margin-top: 8px; }
 .list-actions button {
-    width: 100%;
-    max-width: 400px;
-    height: 60px;
-    border: none;
-    cursor: pointer;
-    border-radius: 18px;
-    color: white;
-    font-weight: 700;
-    font-size: 1rem;
+    width: 100%; max-width: 400px; height: 60px; border: none; cursor: pointer;
+    border-radius: 18px; color: white; font-weight: 700; font-size: 1rem;
     background: linear-gradient(135deg, #8b5cf6, #6d28d9);
 }
 
-/* =========================
-   MODAL RESPONSIVO
-========================= */
 .modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,.7);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
-    padding: 16px;
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.7); backdrop-filter: blur(8px); z-index: 1000; padding: 16px;
 }
-
-.modal.active {
-    display: flex;
-}
-
+.modal.active { display: flex; }
 .modal-content {
-    width: 100%;
-    max-width: 600px;
-    background: #0f172a;
-    border-radius: 24px;
-    padding: clamp(20px, 5vw, 32px);
-    max-height: 90vh; 
-    overflow-y: auto; /* Scroll interno si el formulario es largo */
+    width: 100%; max-width: 600px; background: #0f172a; border-radius: 24px;
+    padding: clamp(20px, 5vw, 32px); max-height: 90vh; overflow-y: auto;
 }
-
-#edit-form {
-    display: grid;
-    gap: 16px;
-}
-
-input, textarea {
-    width: 100%;
-    background: #0b1220;
-    color: white;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px;
-    font-family: inherit;
-}
-
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.modal-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Botones autoajustables */
-    gap: 10px;
-}
-
-.modal-buttons button {
-    height: 52px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
+#edit-form { display: grid; gap: 16px; }
+input, textarea { width: 100%; background: #0b1220; color: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; font-family: inherit; }
+textarea { min-height: 100px; resize: vertical; }
+.modal-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.modal-buttons button { height: 52px; border: none; border-radius: 14px; cursor: pointer; font-weight: 600; }
 .btn-alt { background: #1e293b; color: white; }
 .btn-danger { background: #ef4444; color: white; }
 .btn-save { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; }
 
 /* =========================
-   COLOR PICKER
+    COLOR PICKER & ANIMATIONS
 ========================= */
-#color-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
+#color-options { display: flex; flex-wrap: wrap; gap: 12px; }
+.color-dot { width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; }
+.color-dot.active { border-color: white; box-shadow: 0 0 0 4px rgba(255,255,255,.08); }
 
-.color-dot {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-}
-
-.color-dot.active {
-    border-color: white;
-    box-shadow: 0 0 0 4px rgba(255,255,255,.08);
-}
-
-/* =========================
-   ALERTS & ANIMATIONS
-========================= */
 .big-timer.warning { color: var(--warning); animation: pulseWarning 1s infinite; }
 .big-timer.danger { color: var(--danger); animation: pulseDanger .45s infinite; }
 .main-display.warning { box-shadow: 0 0 40px rgba(245,158,11,.25); }
@@ -367,106 +269,96 @@ textarea {
 @keyframes pulseDanger { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
 
 /* =========================
-   FOCUS MODE (FULLSCREEN)
+    FOCUS MODE (FULLSCREEN)
 ========================= */
 .main-display.focus-mode {
-    position: fixed;
-    inset: 0;
-    border-radius: 0;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #050913;
-    text-align: center;
-    padding: 32px;
+    position: fixed; inset: 0; border-radius: 0; z-index: 999;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background: #050913; text-align: center; padding: 32px;
 }
-
 .main-display.focus-mode .live-clock {
-    position: absolute;
-    top: clamp(16px, 4vw, 32px);
-    right: auto;
-    font-size: clamp(1.2rem, 3vw, 2rem);
+    position: static; font-size: clamp(1.2rem, 3vw, 2rem); margin: 0;
 }
+.main-display.focus-mode #current-segment-title { max-width: 90%; font-size: clamp(2rem, 6vw, 5rem); }
+.main-display.focus-mode .big-timer { font-size: clamp(5rem, 22vw, 16rem); }
+body.focus-active { overflow: hidden; }
 
-.main-display.focus-mode #current-segment-title {
-    max-width: 90%;
-    font-size: clamp(2rem, 6vw, 5rem);
-}
-
-.main-display.focus-mode .big-timer {
-    font-size: clamp(5rem, 22vw, 16rem);
-}
-
-body.focus-active {
-    overflow: hidden;
-}
-/*LOGO*/
-.app-logo img, .brand-header img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-.brand-focus {
-    display: none;
-}
-
-body.focus-active .brand-header {
-    display: none;
-} 
-
-/* Mostramos y posicionamos el logo interno a la DERECHA */
-.main-display.focus-mode .brand-focus {
-    display: block;
-    position: absolute;
-    
-    /* CONTROL DE MÁRGENES RESPONSIVOS (Visualmente actúa como el padding) */
-    top: clamp(20px, 4vw, 40px);    /* No tan pegado al techo */
-    right: clamp(24px, 6vw, 56px);  
-    
-    z-index: 10;
-}
-
-.main-display.focus-mode .brand-focus img {
-    max-height: clamp(45px, 5vw, 75px); /* Tamaño elegante para la cabina */
-    width: auto;
-}
+.app-logo img, .brand-header img { max-width: 100%; height: auto; object-fit: contain; }
+.brand-focus { display: none; }
+body.focus-active .brand-header { display: none; } 
+.main-display.focus-mode .brand-focus { display: block; position: absolute; top: clamp(20px, 4vw, 40px); right: clamp(24px, 6vw, 56px); z-index: 10; }
+.main-display.focus-mode .brand-focus img { max-height: clamp(45px, 5vw, 75px); width: auto; }
 
 /* =========================
-   MEDIA QUERY: SMARTPHONES (≤ 768px)
+    MEDIA QUERY: SMARTPHONES (≤ 768px)
 ========================= */
 @media (max-width: 768px) {
-    /* Agrega espacio superior para que el título no tape el reloj absoluto */
-    .main-display {
-        padding-top: 75px; 
-    }
+    .main-display { padding-top: 75px; }
+    .live-clock { top: 16px; right: 16px; font-size: 0.85rem; padding: 8px 12px; }
+    #current-segment-title { max-width: 100%; }
+    .timer-card { flex-direction: column; align-items: stretch; gap: 14px; text-align: center; }
+    .edit-btn { width: 100%; }
+    .controls-row button { max-width: none; }
+}
+
+/* ============================================================
+    NUEVA MEDIA QUERY: DISPOSITIVOS EN HORIZONTAL (LANDSCAPE)
+    O PANTALLAS GRANDES DE ESCRITORIO
+============================================================ */
+@media (min-width: 769px) and (orientation: landscape), (min-width: 1024px) {
     
-    .live-clock {
-        top: 16px;
-        right: 16px;
-        font-size: 0.85rem;
-        padding: 8px 12px;
+    /* Forzamos a que el contenedor principal use un layout interno por filas */
+    .main-display {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 20px;
+    }
+
+    /* Redistribuimos los textos superiores para que abarquen todo el ancho arriba */
+    .brand-focus,
+    #current-segment-title,
+    #current-segment-host {
+        grid-column: 1 / -1;
     }
 
     #current-segment-title {
         max-width: 100%;
-    }
-
-    /* En móviles, las tarjetas de la lista se apilan verticalmente para mejor lectura */
-    .timer-card {
-        flex-direction: column;
-        align-items: stretch; 
-        gap: 14px;
         text-align: center;
     }
-    
-    .edit-btn {
-        width: 100%;
+
+    /* --- ALINEACIÓN TRIPLE HORIZONTAL --- */
+
+    /* 1. Status Badge a la izquierda */
+    .current-label {
+        grid-column: 1;
+        grid-row: 4; /* Se posiciona en la fila del reloj */
+        justify-self: end; /* Se pega al reloj */
+        margin-bottom: 0;
+        align-self: center;
     }
 
-    .controls-row button {
-        max-width: none; /* Los botones crecen para ocupar el ancho de forma limpia */
+    /* 2. El Reloj Grande al centro */
+    .big-timer {
+        grid-column: 2;
+        grid-row: 4;
+        margin-bottom: 0;
+    }
+
+    /* 3. Live Clock a la derecha */
+    .live-clock {
+        position: static; /* Rompe el posicionamiento absoluto de la esquina */
+        grid-column: 3;
+        grid-row: 4;
+        justify-self: start; /* Se pega al reloj */
+        margin: 0;
+    }
+
+    /* Elementos inferiores abarcan todo el ancho inferior */
+    .progress-container,
+    .controls-row {
+        grid-column: 1 / -1;
+        width: 100%;
     }
 }
