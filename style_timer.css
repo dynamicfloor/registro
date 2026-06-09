@@ -54,7 +54,7 @@ body {
 }
 
 /* =========================
-    MAIN DISPLAY
+    MAIN DISPLAY (Por defecto en Vertical)
 ========================= */
 .main-display {
     position: relative;
@@ -64,13 +64,11 @@ body {
     padding: clamp(24px, 5vw, 44px);
     overflow: hidden;
     box-shadow: var(--shadow);
-    
-    /* Activamos Flexbox para controlar el orden de los elementos hijos */
     display: flex;
     flex-direction: column;
 }
 
-/* Reloj en la esquina (Por defecto en vertical) */
+/* Reloj en la esquina (Modo Móvil/Vertical absoluto) */
 .live-clock {
     position: absolute;
     top: 24px;
@@ -99,7 +97,7 @@ body {
     font-weight: 800;
     letter-spacing: .08em;
     margin-bottom: 22px;
-    align-self: flex-start; /* Evita que ocupe todo el ancho */
+    align-self: flex-start;
 }
 
 #current-segment-title {
@@ -207,8 +205,14 @@ body {
     transition: var(--transition);
 }
 
-.timer-card:hover { background: var(--card-hover); }
-.timer-card.active { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(139,92,246,.35); }
+.timer-card:hover { 
+    background: var(--card-hover); 
+}
+
+.timer-card.active { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 1px rgba(139,92,246,.35); 
+}
 
 .timer-title { font-size: 1.05rem; font-weight: 800; }
 .timer-sub { margin-top: 4px; color: var(--text-soft); font-size: .9rem; }
@@ -254,7 +258,7 @@ textarea { min-height: 100px; resize: vertical; }
 .btn-save { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; }
 
 /* =========================
-    COLOR PICKER & ANIMATIONS
+    COLOR PICKER & ALERTS
 ========================= */
 #color-options { display: flex; flex-wrap: wrap; gap: 12px; }
 .color-dot { width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; }
@@ -269,24 +273,34 @@ textarea { min-height: 100px; resize: vertical; }
 @keyframes pulseDanger { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
 
 /* =========================
-    FOCUS MODE (FULLSCREEN)
+    BRAND & LOGOS
 ========================= */
-.main-display.focus-mode {
-    position: fixed; inset: 0; border-radius: 0; z-index: 999;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background: #050913; text-align: center; padding: 32px;
-}
-.main-display.focus-mode .live-clock {
-    position: static; font-size: clamp(1.2rem, 3vw, 2rem); margin: 0;
-}
-.main-display.focus-mode #current-segment-title { max-width: 90%; font-size: clamp(2rem, 6vw, 5rem); }
-.main-display.focus-mode .big-timer { font-size: clamp(5rem, 22vw, 16rem); }
-body.focus-active { overflow: hidden; }
-
 .app-logo img, .brand-header img { max-width: 100%; height: auto; object-fit: contain; }
 .brand-focus { display: none; }
+
+/* =========================
+    FOCUS MODE (BASE COMPARTIDA)
+========================= */
+.main-display.focus-mode {
+    position: fixed; 
+    inset: 0; 
+    border-radius: 0; 
+    z-index: 999;
+    display: flex; 
+    background: #050913; 
+    text-align: center; 
+    padding: 32px;
+}
+body.focus-active { overflow: hidden; }
 body.focus-active .brand-header { display: none; } 
-.main-display.focus-mode .brand-focus { display: block; position: absolute; top: clamp(20px, 4vw, 40px); right: clamp(24px, 6vw, 56px); z-index: 10; }
+
+.main-display.focus-mode .brand-focus { 
+    display: block; 
+    position: absolute; 
+    top: clamp(20px, 4vw, 40px); 
+    right: clamp(24px, 6vw, 56px); 
+    z-index: 10; 
+}
 .main-display.focus-mode .brand-focus img { max-height: clamp(45px, 5vw, 75px); width: auto; }
 
 /* =========================
@@ -299,16 +313,30 @@ body.focus-active .brand-header { display: none; }
     .timer-card { flex-direction: column; align-items: stretch; gap: 14px; text-align: center; }
     .edit-btn { width: 100%; }
     .controls-row button { max-width: none; }
+
+    /* Ajustes específicos de Focus Mode en Móviles Verticales */
+    .main-display.focus-mode {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-display.focus-mode .live-clock {
+        position: absolute;
+        top: clamp(16px, 4vw, 32px);
+        right: auto;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+    .main-display.focus-mode #current-segment-title { max-width: 90%; font-size: clamp(2rem, 6vw, 5rem); }
+    .main-display.focus-mode .big-timer { font-size: clamp(5rem, 22vw, 16rem); }
 }
 
 /* ============================================================
-    NUEVA MEDIA QUERY: DISPOSITIVOS EN HORIZONTAL (LANDSCAPE)
-    O PANTALLAS GRANDES DE ESCRITORIO
+    MEDIA QUERY: PANTALLAS HORIZONTALES / ESCRITORIO (LANDSCAPE)
 ============================================================ */
 @media (min-width: 769px) and (orientation: landscape), (min-width: 1024px) {
     
-    /* Forzamos a que el contenedor principal use un layout interno por filas */
-    .main-display {
+    /* MODO NORMAL (Grid de 3 columnas) */
+    .main-display:not(.focus-mode) {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
@@ -316,49 +344,88 @@ body.focus-active .brand-header { display: none; }
         gap: 20px;
     }
 
-    /* Redistribuimos los textos superiores para que abarquen todo el ancho arriba */
-    .brand-focus,
-    #current-segment-title,
-    #current-segment-host {
+    .main-display:not(.focus-mode) .brand-focus,
+    .main-display:not(.focus-mode) #current-segment-title,
+    .main-display:not(.focus-mode) #current-segment-host {
         grid-column: 1 / -1;
     }
 
-    #current-segment-title {
+    .main-display:not(.focus-mode) #current-segment-title {
         max-width: 100%;
         text-align: center;
     }
 
-    /* --- ALINEACIÓN TRIPLE HORIZONTAL --- */
-
-    /* 1. Status Badge a la izquierda */
-    .current-label {
+    /* Posicionamiento en los costados (Modo Normal) */
+    .main-display:not(.focus-mode) .current-label {
         grid-column: 1;
-        grid-row: 4; /* Se posiciona en la fila del reloj */
-        justify-self: end; /* Se pega al reloj */
+        grid-row: 4;
+        justify-self: end;
         margin-bottom: 0;
         align-self: center;
     }
 
-    /* 2. El Reloj Grande al centro */
-    .big-timer {
+    .main-display:not(.focus-mode) .big-timer {
         grid-column: 2;
         grid-row: 4;
         margin-bottom: 0;
     }
 
-    /* 3. Live Clock a la derecha */
-    .live-clock {
-        position: static; /* Rompe el posicionamiento absoluto de la esquina */
+    .main-display:not(.focus-mode) .live-clock {
+        position: static;
         grid-column: 3;
         grid-row: 4;
-        justify-self: start; /* Se pega al reloj */
+        justify-self: start;
         margin: 0;
     }
 
-    /* Elementos inferiores abarcan todo el ancho inferior */
-    .progress-container,
-    .controls-row {
+    .main-display:not(.focus-mode) .progress-container,
+    .main-display:not(.focus-mode) .controls-row {
         grid-column: 1 / -1;
         width: 100%;
+    }
+
+    /* MODO FOCUS HORIZONTAL (Estructura Limpia Flex-Row) */
+    .main-display.focus-mode {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(20px, 5vw, 60px);
+    }
+
+    /* El título abarca todo el ancho superior */
+    .main-display.focus-mode #current-segment-title,
+    .main-display.focus-mode #current-segment-host {
+        width: 100%;
+        flex-basis: 100%;
+        text-align: center;
+    }
+
+    .main-display.focus-mode #current-segment-title {
+        font-size: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    /* Ordenamiento horizontal de los 3 contadores principales */
+    .main-display.focus-mode .current-label {
+        order: 1;
+        margin-bottom: 0;
+        align-self: center;
+        font-size: clamp(1rem, 1.8vw, 1.3rem);
+        padding: 12px 24px;
+    }
+
+    .main-display.focus-mode .big-timer {
+        order: 2;
+        margin-bottom: 0;
+        font-size: clamp(6rem, 20vw, 13rem); /* Tamaño monumental para cabina */
+    }
+
+    .main-display.focus-mode .live-clock {
+        position: static;
+        order: 3;
+        margin: 0;
+        font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+        padding: 14px 24px;
+        background: rgba(255,255,255,.06);
     }
 }
