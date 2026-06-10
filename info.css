@@ -352,7 +352,7 @@ body{
    INFO GRID
 ========================== */
 
-.info-grid{
+/* .info-grid{
 
     display:grid;
 
@@ -363,6 +363,30 @@ body{
         );
 
     gap:16px;
+} */
+
+/* .info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+/*
+.info-grid:has(> :last-child:nth-child(odd)) > :first-child{
+    grid-column:1 / -1;
+} */
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    column-gap:16px;
+    row-gap:16px;
+
+    margin-top:30px;
+}
+
+.info-grid > .featured{
+    grid-column:1 / -1;
 }
 
 .info-card{
@@ -419,6 +443,10 @@ body{
 
 .cyan{
     color:#22D3EE;
+}
+
+.yellow{
+    color: #FFFF00;
 }
 
 /* ==========================
@@ -665,6 +693,12 @@ body{
     color:#64748B;
 
     font-size:13px;
+}
+
+.responsive-img{
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* ==========================
